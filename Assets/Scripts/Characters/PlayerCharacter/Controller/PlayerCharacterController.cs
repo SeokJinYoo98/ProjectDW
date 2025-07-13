@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Character.Player
 {
-    [RequireComponent( typeof(Rigidbody2D))]
+    
     [RequireComponent( typeof(PlayerCharacterView))]
     public class PlayerCharacterController : MonoBehaviour
     {
@@ -29,10 +29,8 @@ namespace Character.Player
         {
         }
 
-        private void OnNumPressed(int num)
-        {
-            _view.ChangeAnim( num );
-        }
+        public void Move(Vector2 moveDir)
+            => _view.Move( moveDir, moveDir.magnitude );
     }
 }
 

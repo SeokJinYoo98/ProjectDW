@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace Character.Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(AnimatorController))]
     public class PlayerCharacterView : MonoBehaviour
     {
         [SerializeField] private PlayerCharacterViewData _viewData;
         private Animator        _animator;
         private SpriteRenderer  _sr;
+        private Rigidbody2D     _rb;
         public void SetViewData(PlayerCharacterViewData viewData)
         {
             _viewData = viewData;
@@ -23,13 +24,12 @@ namespace Character.Player
 
             _sr.sprite = _viewData.DefaultSprite;
             _animator.runtimeAnimatorController =  _viewData.AnimController;
-            ChangeAnim( 0 );
         }
         private void Awake()
         {
             _animator   = GetComponent<Animator>( );
             _sr         = GetComponent<SpriteRenderer>( );
-            
+            _rb         = GetComponent<Rigidbody2D>( );
         }
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -42,26 +42,12 @@ namespace Character.Player
         {
         }
 
-        public void ChangeAnim(int num)
-        {
-            switch (num)
-            {
-                case 1: 
-                    SetMovement( 0f );
-                    break;
-                case 2: 
-                    SetMovement( 0.5f );
-                    break;
-                case 3: 
-                    SetMovement( 1.5f );
-                    break;
-                case 4:
-                    PlayDeath( );
-                    break;
-                default: break;
-            }
-        }
-        public void SetMovement(float speed)    => _animator.SetFloat( "Speed", speed );
+        public void SetSpeed(float speed)    => _animator.SetFloat( "Speed", speed );
         public void PlayDeath()                 => _animator.SetTrigger( "Die" );
+        public void Move(Vector2 moveDir, float speed)
+        {
+            _rb.linearVelocity = moveDir * speed;
+            SetSpeed( speed );
+        }
     }
 }
