@@ -34,7 +34,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Num1",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

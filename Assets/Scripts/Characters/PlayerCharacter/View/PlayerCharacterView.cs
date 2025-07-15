@@ -1,4 +1,4 @@
-﻿using UnityEditor.Animations;
+using UnityEditor.Animations;
 
 using UnityEngine;
 
